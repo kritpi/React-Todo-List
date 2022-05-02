@@ -20,6 +20,8 @@ function App() {
   const [isEditing, setIsEditing] = useState(false); // boolean state to know if we are editing
   const [currentTodo, setCurrentTodo] = useState({}); // object state to set so we know which todo item we are editing
 
+  const [isCompleted, setIsCompleted] = useState(false) //completed status check 
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos)); //The browser storage only accepts data-type strings. So, for values of different data types like the object or array, we must convert it to a JSON string
   }, [todos]); //redo useEffect after todos has been changed
@@ -40,8 +42,9 @@ function App() {
       setTodos([
         ...todos, //เอา todos มาโชว์ แล้วเอาตัวใหม่มาต่อ
         {
-          id: todos.length + 1, //กำหนด id
-          text: todo.trim(),
+          id : todos.length + 1, //กำหนด id
+          text : todo.trim(), //ตัด space
+          completed : isCompleted, //เช็คว่าทำเสร็จรึยัง deafult : false
         },
       ]);
     }
@@ -73,6 +76,11 @@ function App() {
     setCurrentTodo({ ...todo });
   }
 
+  function handleCheckboxClick() {
+    setIsCompleted(!isCompleted)
+      const saveCompleted = isCompleted
+  }
+  
   return (
     <div className="App">
       <h1>Todo List React</h1>
@@ -95,6 +103,8 @@ function App() {
         todos={todos}
         handleEditClick={handleEditClick}
         handleDeleteClick={handleDeleteClick}
+        handleCheckboxClick = {handleCheckboxClick}
+        isCompleted = {isCompleted}
       />
     </div>
   );
